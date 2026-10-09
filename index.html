@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOODBOARD — Find your visual direction</title>
+  <meta name="description" content="Describe the feeling. Discover the aesthetic. MOODBOARD classifies your creative intent into one of four curated visual directions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23171717'/%3E%3Crect x='6' y='6' width='9' height='9' fill='%23F5E94D'/%3E%3Crect x='17' y='6' width='9' height='9' fill='%23FF5A4E'/%3E%3Crect x='6' y='17' width='9' height='9' fill='%2379F2E6'/%3E%3Crect x='17' y='17' width='9' height='9' fill='%23F5F2EB'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <a class="skip-link" href="#generator">Skip to generator</a>
+
+  <header class="site-nav">
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="#top" aria-label="MOODBOARD home">
+        <span class="wordmark-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        MOODBOARD
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#explore">Explore</a></li>
+          <li><a href="#colours">Colour system</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+      <p class="jev-status" id="jev-status" role="status">
+        <span class="jev-dot" aria-hidden="true"></span>
+        <span id="jev-status-text">JEV CLASSIFIER · CHECKING…</span>
+      </p>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO / GENERATOR -->
+    <section class="hero" id="generator" aria-labelledby="hero-heading">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Creative direction generator</p>
+          <h1 id="hero-heading">Every idea<br />has a <em>colour</em>.</h1>
+          <p class="lede">Tell us what you&rsquo;re imagining. Discover a visual direction from our curated design library.</p>
+          <p class="supporting">Describe the feeling. Discover the aesthetic.</p>
+        </div>
+
+        <div class="hero-form-block">
+          <form id="mood-form" novalidate>
+            <label class="input-label" for="mood-input">Describe the mood you want</label>
+            <div class="textarea-wrap">
+              <textarea
+                id="mood-input"
+                name="mood"
+                rows="5"
+                placeholder="Something cinematic, dark and a little mysterious..."
+                aria-describedby="char-count form-error"
+                autocomplete="off"
+              ></textarea>
+              <span class="char-count" id="char-count" aria-live="polite">0 / 500</span>
+            </div>
+            <p class="hint">Press <kbd>Enter</kbd> to find your direction, <kbd>Shift</kbd> + <kbd>Enter</kbd> for a new line.</p>
+            <div class="form-row">
+              <button type="submit" class="btn-primary" id="submit-btn">
+                <span class="btn-label">Find my direction</span>
+              </button>
+            </div>
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+          </form>
+
+          <div class="examples" aria-label="Example prompts">
+            <p class="examples-title">Try an example</p>
+            <ul class="example-list">
+              <li><button type="button" class="example-chip" data-example="A quiet luxury fashion house — restrained, elegant, premium, with room to breathe.">Quiet luxury</button></li>
+              <li><button type="button" class="example-chip" data-example="Electric and experimental — loud colours, bold type, playful high-contrast energy.">Electric and experimental</button></li>
+              <li><button type="button" class="example-chip" data-example="Soft and natural — warm, earthy, botanical materials with a calm human touch.">Soft and natural</button></li>
+              <li><button type="button" class="example-chip" data-example="The future after dark — cinematic, technological, neon-lit and precise.">Future after dark</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="loading-bar" id="loading-bar" hidden>
+          <div class="loading-track" aria-hidden="true"><span></span></div>
+          <p role="status">READING YOUR CREATIVE DIRECTION…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT BOARD -->
+    <section class="board-section" id="result-section" aria-labelledby="board-heading" hidden>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Your direction board</p>
+          <h2 id="board-heading">The board</h2>
+          <p class="origin-note" id="origin-note" aria-live="polite"></p>
+        </div>
+
+        <!-- A. Selected direction -->
+        <article class="direction-head" id="direction-head" aria-live="polite"></article>
+
+        <!-- Uncertainty chooser -->
+        <div class="chooser" id="chooser" hidden></div>
+
+        <!-- B. Palette -->
+        <section aria-labelledby="palette-heading" class="board-block">
+          <div class="block-head">
+            <p class="block-index">01</p>
+            <h3 id="palette-heading">Palette</h3>
+          </div>
+          <ul class="swatches" id="swatches"></ul>
+          <p class="microcopy">Select any swatch to copy its HEX value.</p>
+        </section>
+
+        <!-- C. Typography -->
+        <section aria-labelledby="type-heading" class="board-block">
+          <div class="block-head">
+            <p class="block-index">02</p>
+            <h3 id="type-heading">Typography</h3>
+          </div>
+          <div class="type-grid" id="type-grid"></div>
+        </section>
+
+        <!-- D. UI card system -->
+        <section aria-labelledby="cards-heading" class="board-block">
+          <div class="block-head">
+            <p class="block-index">03</p>
+            <h3 id="cards-heading">Interface cards</h3>
+          </div>
+          <div class="preview-cards" id="preview-cards"></div>
+        </section>
+
+        <!-- E. Probabilities -->
+        <section aria-labelledby="prob-heading" class="board-block">
+          <div class="block-head">
+            <p class="block-index">04</p>
+            <h3 id="prob-heading">How Jev read your input</h3>
+          </div>
+          <p class="microcopy">The model&rsquo;s measured probabilities for each predefined direction. Higher means a closer match — it is not a guarantee of correctness.</p>
+          <ol class="prob-list" id="prob-list"></ol>
+        </section>
+      </div>
+    </section>
+
+    <!-- EXPLORE: the four predefined directions -->
+    <section class="library-section" id="explore" aria-labelledby="explore-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">The library</p>
+          <h2 id="explore-heading">Four directions, defined in advance.</h2>
+          <p class="section-sub">Jev never invents a category. It only chooses between these four systems, each designed down to the last HEX value.</p>
+        </div>
+        <div class="library-grid" id="library-grid"></div>
+      </div>
+    </section>
+
+    <!-- COLOUR SYSTEM -->
+    <section class="colours-section" id="colours" aria-labelledby="colours-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Colour system</p>
+          <h2 id="colours-heading">Twenty colours. Nothing generated.</h2>
+          <p class="section-sub">Every palette below is authored and fixed. Select any swatch to copy it.</p>
+        </div>
+        <div class="colours-grid" id="colours-grid"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-section" id="about" aria-labelledby="about-heading">
+      <div class="wrap about-grid">
+        <div>
+          <p class="eyebrow">About</p>
+          <h2 id="about-heading">The model chooses.<br />The designer defines the choices.</h2>
+        </div>
+        <div class="about-copy">
+          <p>You describe a feeling. <strong>Jev</strong> — a decision-only model reached through the Vercel AI Gateway — classifies your words into exactly one of four predefined directions. The interface then responds by wearing that direction&rsquo;s full design system.</p>
+          <dl class="about-facts">
+            <div><dt>Decision threshold</dt><dd>70% — below it, you are shown the top two candidates and choose yourself.</dd></div>
+            <div><dt>What Jev returns</dt><dd>One choice plus a probability for each of the four options. Nothing else.</dd></div>
+            <div><dt>What Jev never does</dt><dd>Invent colours, categories, fonts or recommendations. The board is curated; only the selection is computed.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><strong>MOODBOARD</strong> — Find your visual direction.</p>
+      <p class="footer-note">Classification by Jev via the Vercel AI Gateway. Design systems curated by the designer.</p>
+    </div>
+  </footer>
+
+  <div class="toast-region" aria-live="polite" id="toast-region"></div>
+
+  <script src="directions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
