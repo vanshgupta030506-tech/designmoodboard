@@ -288,6 +288,7 @@
   function renderBoard(id, probs, origin) {
     var d = getDirection(id);
     applyTheme(id);
+    lastDirectionId = id;
 
     $("origin-note").innerHTML = origin.note;
     $("chooser").hidden = true;
@@ -605,4 +606,16 @@
   renderColourSystem();
   initReveal();
   checkGatewayStatus();
+
+  /* ---------- studio handoff: edit the received palette ---------- */
+  var lastDirectionId = null;
+  var editBtn = $("edit-palette-btn");
+  if (editBtn) {
+    editBtn.addEventListener("click", function () {
+      if (!lastDirectionId) return;
+      if (window.MOODBOARD_STUDIO && window.MOODBOARD_STUDIO.openSignature) {
+        window.MOODBOARD_STUDIO.openSignature(lastDirectionId);
+      }
+    });
+  }
 })();

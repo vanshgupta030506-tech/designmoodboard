@@ -91,8 +91,21 @@ Also covered: repeated submissions replace the board; swatches copy on click wit
 
 ## Files
 
-- `index.html` — structure: nav, hero form, result board, library, colour system, about.
-- `styles.css` — editorial styling + four themes via CSS variables.
+- `index.html` — structure: nav, hero form, result board, library, colour system, studio, about.
+- `styles.css` — editorial styling + four themes via CSS variables + studio/preview styles.
 - `directions.js` — the four authored design systems + confidence threshold.
-- `app.js` — form handling, `/api/decide` client, rendering, uncertainty flow.
+- `palettes.js` — 80 curated palettes (20 per direction) in fixed role order; originals never mutated.
+- `studio.js` — palette editor, live preview binding, contrast checks, library browser, localStorage persistence. Makes zero network requests.
+- `app.js` — form handling, `/api/decide` client, rendering, uncertainty flow, studio handoff.
 - `api/decide.js` — secure serverless endpoint (validation → gateway → validated `{ choice, probabilities }`).
+
+## Palette studio
+
+A fully interactive colour editor (`#studio` nav link, or “Edit these colours in the studio” on any result board):
+
+- **Edit** — each of the five role colours (Background, Surface, Text, Accent, Accent 2) has a colour picker + validated HEX field; changes repaint instantly.
+- **Live preview** — a sample product UI (nav, hero, buttons, tags, visual panel, progress card, chart card, signup form) styled exclusively by `--st-*` variables set from the working copy. Derived muted/border tones and button-text colour recompute on every edit.
+- **Library** — all 80 curated palettes with direction filters, favourites (★) and search. Switching palettes with unsaved edits asks first via confirm.
+- **Reset / Duplicate / Save** — reset restores the loaded original; duplicate and save create timestamped custom copies under “My palettes” (localStorage, this browser only). Saving never modifies curated originals.
+- **Readability** — contrast ratios with WCAG AA / Large-AA badges for text, secondary text and button text; a warning + optional “Suggest readable text colour” (black/white pick) appears when body text drops below AA. Your colours are never auto-replaced.
+- **No AI on edit** — the studio never calls `/api/decide`; verified by request counting in tests.

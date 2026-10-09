@@ -27,6 +27,7 @@
         <ul class="nav-links">
           <li><a href="#explore">Explore</a></li>
           <li><a href="#colours">Colour system</a></li>
+          <li><a href="#studio">Studio</a></li>
           <li><a href="#about">About</a></li>
         </ul>
       </nav>
@@ -114,6 +115,9 @@
           </div>
           <ul class="swatches" id="swatches"></ul>
           <p class="microcopy">Select any swatch to copy its HEX value.</p>
+          <div class="form-row">
+            <button type="button" class="btn-ghost" id="edit-palette-btn">Edit these colours in the studio</button>
+          </div>
         </section>
 
         <!-- C. Typography -->
@@ -170,6 +174,117 @@
       </div>
     </section>
 
+    <!-- STUDIO: interactive palette editor + live preview -->
+    <section class="studio-section" id="studio" aria-labelledby="studio-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Palette studio</p>
+          <h2 id="studio-heading">Edit the palette. Watch the interface follow.</h2>
+          <p class="section-sub">Pick any of the 80 curated palettes, or continue from the direction Jev chose for you. Every change repaints the live product preview instantly — no save button, no new AI request.</p>
+        </div>
+
+        <div class="studio-grid">
+          <!-- Editor column -->
+          <div class="studio-editor" aria-label="Palette editor">
+            <div class="st-source" id="st-source" aria-live="polite"></div>
+            <ol class="st-rows" id="st-rows"></ol>
+
+            <div class="st-actions" aria-label="Palette actions">
+              <div class="st-action-row">
+                <button type="button" class="btn-ghost" id="st-reset">Reset colours</button>
+                <button type="button" class="btn-ghost" id="st-duplicate">Duplicate palette</button>
+              </div>
+              <div class="st-save-row">
+                <label class="st-save-label" for="st-save-name">Save custom palette</label>
+                <div class="st-save-controls">
+                  <input type="text" id="st-save-name" maxlength="60" placeholder="Name it, e.g. Midnight Citrus" autocomplete="off" />
+                  <button type="button" class="btn-primary btn-small" id="st-save">Save</button>
+                </div>
+                <p class="st-save-err" id="st-save-err" role="alert" hidden></p>
+              </div>
+            </div>
+
+            <div class="st-contrast" id="st-contrast" aria-label="Colour accessibility"></div>
+
+            <div class="st-mine">
+              <h3>My palettes</h3>
+              <p class="microcopy" id="st-mine-empty">Nothing saved yet. Edits you save or duplicate live here, in this browser only.</p>
+              <ul class="st-mine-list" id="st-mine-list"></ul>
+            </div>
+          </div>
+
+          <!-- Live preview column -->
+          <div class="studio-preview-col">
+            <div class="stv-frame" id="studio-preview" aria-label="Live product preview. Updates instantly as you edit the palette.">
+              <div class="stv-nav" aria-hidden="false">
+                <span class="stv-logo"><i aria-hidden="true"></i>Northwind</span>
+                <span class="stv-links"><span>Product</span><span>Pricing</span><span>Journal</span></span>
+                <span class="stv-navcta">Get started</span>
+              </div>
+              <div class="stv-hero">
+                <div class="stv-herotext">
+                  <p class="stv-kicker">New collection</p>
+                  <p class="stv-title">Designed around how you feel.</p>
+                  <p class="stv-sub">A calm workspace for restless ideas. Try a plan, watch the progress ring fill, and make it yours.</p>
+                  <div class="stv-btnrow">
+                    <button type="button" class="stv-btn solid" id="stv-primary">Start free</button>
+                    <button type="button" class="stv-btn ghost" id="stv-secondary">Compare plans</button>
+                  </div>
+                  <p class="stv-plan-note" id="stv-plan-note" aria-live="polite"></p>
+                  <div class="stv-tags"><span>New</span><span>Bestseller</span><span>Limited</span></div>
+                </div>
+                <div class="stv-visual" aria-hidden="true">
+                  <div class="stv-art"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+                  <p class="stv-caption">Campaign visual · 4 : 3</p>
+                </div>
+              </div>
+              <div class="stv-panels">
+                <article class="stv-card">
+                  <p class="stv-cardkicker">Onboarding</p>
+                  <p class="stv-cardtitle">Your workspace is 68% ready</p>
+                  <div class="stv-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68" id="stv-progress"><span id="stv-progress-fill"></span></div>
+                  <button type="button" class="stv-linkbtn" id="stv-advance">Complete next step</button>
+                </article>
+                <article class="stv-card">
+                  <p class="stv-cardkicker">This week</p>
+                  <p class="stv-cardtitle">Energy by day</p>
+                  <div class="stv-chart" aria-hidden="true"><i style="height:38%"></i><i style="height:64%"></i><i style="height:47%"></i><i style="height:82%"></i><i style="height:58%"></i><i style="height:95%"></i><i style="height:71%"></i></div>
+                  <p class="stv-stat"><strong>+24%</strong> momentum</p>
+                </article>
+                <article class="stv-card">
+                  <p class="stv-cardkicker">Stay in the loop</p>
+                  <p class="stv-cardtitle">Get the Friday drop</p>
+                  <div class="stv-form">
+                    <label class="stv-sr" for="stv-email">Email address</label>
+                    <input type="email" id="stv-email" placeholder="you@studio.com" autocomplete="off" />
+                    <button type="button" class="stv-btn solid small" id="stv-subscribe">Join</button>
+                  </div>
+                  <p class="stv-formmsg" id="stv-formmsg" role="status"></p>
+                </article>
+              </div>
+            </div>
+            <p class="microcopy">Live preview — every component above reads its colours from the palette you are editing. Nothing here triggers an AI request.</p>
+          </div>
+        </div>
+
+        <!-- Curated library -->
+        <div class="st-library">
+          <div class="block-head">
+            <p class="block-index">80</p>
+            <h3 id="st-lib-heading">Curated palette library</h3>
+          </div>
+          <div class="st-filters" role="group" aria-label="Filter palettes">
+            <div class="st-chips" id="st-chips"></div>
+            <label class="st-search">Search
+              <input type="search" id="st-search" placeholder="Try “moss”, “neon”, “clay”…" autocomplete="off" />
+            </label>
+          </div>
+          <p class="microcopy" id="st-lib-count" aria-live="polite"></p>
+          <div class="st-lib-grid" id="st-lib-grid"></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ABOUT -->
     <section class="about-section" id="about" aria-labelledby="about-heading">
       <div class="wrap about-grid">
@@ -199,6 +314,8 @@
   <div class="toast-region" aria-live="polite" id="toast-region"></div>
 
   <script src="directions.js"></script>
+  <script src="palettes.js"></script>
   <script src="app.js"></script>
+  <script src="studio.js"></script>
 </body>
 </html>
